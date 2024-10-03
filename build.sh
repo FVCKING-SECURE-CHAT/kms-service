@@ -1,0 +1,1 @@
+docker build -t fvcking-secure-chat/kms-service .

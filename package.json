@@ -1,0 +1,23 @@
+{
+  "name": "kms-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx tsx --env-file=.env src/index",
+    "prod": "npx tsx src/index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^5.20.0",
+    "date-fns": "^4.1.0",
+    "express": "^4.21.0",
+    "prisma": "^5.20.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
+  }
+}
