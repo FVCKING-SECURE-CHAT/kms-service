@@ -3,37 +3,31 @@ name: Build and Push Docker Image to GHCR
 on:
   push:
     branches:
-      - prod  # This workflow triggers when there is a push to the main branch
-  workflow_dispatch:  # Allows manually triggering the workflow
+      - main
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      # 1. Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
+      # 2. Log in to GitHub Container Registry
       - name: Log in to GHCR
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}  # GitHub automatically provides this token
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: |
-            ghcr.io/${{ vars.REPO  }}/kms-service:latest
-            ghcr.io/${{ vars.REPO }}/kms-service:${{ github.sha }}
-
-      - name: Verify the image is in the registry
+      # 3. Build Docker image
+      - name: Build Docker image
         run: |
-          echo "Listing images in the GHCR repository..."
-          curl -u ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }} https://ghcr.io/v2/${{ vars.REPO }}/kms-service/tags/list
+          docker build -t ghcr.io/${{ vars.REPO }} .
+
+      # 4. Push Docker image to GHCR
+      - name: Push Docker image to GHCR
+        run: |
+          docker push ghcr.io/${{ vars.REPO }}
