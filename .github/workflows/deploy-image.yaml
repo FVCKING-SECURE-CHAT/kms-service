@@ -30,10 +30,10 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/kms-service:latest
-            ghcr.io/${{ github.repository }}/kms-service:${{ github.sha }}
+            ghcr.io/${{ vars.REPO  }}/kms-service:latest
+            ghcr.io/${{ vars.REPO }}/kms-service:${{ github.sha }}
 
       - name: Verify the image is in the registry
         run: |
           echo "Listing images in the GHCR repository..."
-          curl -u ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }} https://ghcr.io/v2/${{ github.repository }}/kms-service/tags/list
+          curl -u ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }} https://ghcr.io/v2/${{ vars.REPO }}/kms-service/tags/list
