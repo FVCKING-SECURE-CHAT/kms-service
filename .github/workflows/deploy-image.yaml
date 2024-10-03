@@ -25,9 +25,9 @@ jobs:
       # 3. Build Docker image
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ vars.REPO }} .
+          docker build -t ghcr.io/${{ vars.REPO }}/kms-service .
 
       # 4. Push Docker image to GHCR
       - name: Push Docker image to GHCR
         run: |
-          docker push ghcr.io/${{ vars.REPO }}
+          docker push ghcr.io/${{ vars.REPO }}/kms-service
